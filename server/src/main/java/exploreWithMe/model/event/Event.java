@@ -2,14 +2,17 @@ package exploreWithMe.model.event;
 
 import exploreWithMe.model.category.Category;
 import exploreWithMe.model.Location;
+import exploreWithMe.model.compilation.Compilation;
 import exploreWithMe.model.user.User;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;
+import org.hibernate.annotations.DynamicUpdate;
 
 import javax.persistence.*;
 import java.time.LocalDateTime;
 import java.util.Objects;
+import java.util.Set;
 
 /**
  * @author Andrey Boyarov
@@ -20,6 +23,7 @@ import java.util.Objects;
 @Getter
 @Setter
 @ToString
+@DynamicUpdate
 public class Event {
 
     @Id
@@ -50,9 +54,11 @@ public class Event {
     @JoinColumn(name = "initiator_id", referencedColumnName = "user_id")
     private User initiator;
 
-    @ManyToOne(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
-    @JoinColumn(name = "location_id", referencedColumnName = "location_id")
-    private Location location;
+    @Column(name = "latitude")
+    private Double latitude;
+
+    @Column(name = "longitude")
+    private Double longitude;
 
     @Column(name = "paid")
     private Boolean paid;
@@ -67,13 +73,16 @@ public class Event {
     private Boolean requestModeration;
 
     @Column(name = "state")
-    private State state = State.PUBLISHED;
+    @Enumerated(EnumType.STRING)
+    private State state;
 
     @Column(name = "title")
     private String title;
 
-    @Column(name = "views")
-    private Integer views;
+
+    @ManyToMany(mappedBy = "events")
+    @ToString.Exclude
+    Set<Compilation> compilations;
 
     @Override
     public boolean equals(Object o) {

@@ -11,9 +11,7 @@ import java.util.List;
  */
 public interface RequestRepository extends JpaRepository<Request, Long> {
 
-    @Query("from Request r where r.event.id = ?1" +
-            "and r.requester.id = ?2")
-    List<Request> findRequestsByUserId(Long eventId, Long userId);
+    List<Request> findRequestsByRequesterId(Long userId);
 
     @Query("from Request r where r.id = ?1" +
             "and r.requester.id = ?2")

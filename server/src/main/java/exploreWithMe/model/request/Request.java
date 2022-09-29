@@ -14,7 +14,6 @@ import java.time.LocalDateTime;
 @Entity
 @Table(name = "requests")
 @Getter @Setter @ToString
-@NoArgsConstructor
 public class Request {
     @Id
     @Column(name = "request_id")
@@ -33,5 +32,6 @@ public class Request {
     private User requester;
 
     @Column(name = "status")
-    private RequestState status = RequestState.PENDING;
+    @Enumerated(EnumType.STRING)
+    private RequestState status;
 }

@@ -1,6 +1,10 @@
 package exploreWithMe.service.admin.impl;
 
+import exploreWithMe.map.CompilationMapper;
 import exploreWithMe.model.compilation.Compilation;
+import exploreWithMe.model.compilation.CompilationDto;
+import exploreWithMe.model.compilation.NewCompilationDto;
+import exploreWithMe.repository.CompilationRepository;
 import exploreWithMe.service.admin.AdminCompilationService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -11,14 +15,21 @@ import org.springframework.stereotype.Service;
 @Service
 @RequiredArgsConstructor
 public class AdminCompilationServiceImpl implements AdminCompilationService {
+
+    private final CompilationRepository compilationRepository;
+
+    private final CompilationMapper mapper;
+
     @Override
-    public Compilation create(Compilation compilation) {
-        return null;
+    public CompilationDto create(NewCompilationDto newCompilationDto) {
+        Compilation compilation = mapper.mapToCompilation(newCompilationDto);
+        compilationRepository.save(compilation);
+        return mapper.mapToCompilationDto(compilation);
     }
 
     @Override
     public void deleteById(Long compId) {
-
+        compilationRepository.deleteById(compId);
     }
 
     @Override

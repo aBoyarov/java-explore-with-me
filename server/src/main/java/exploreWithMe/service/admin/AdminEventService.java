@@ -3,6 +3,7 @@ package exploreWithMe.service.admin;
 import exploreWithMe.model.event.Event;
 import exploreWithMe.model.event.EventDto;
 import exploreWithMe.model.event.NewEventDto;
+import exploreWithMe.model.event.State;
 
 import java.time.LocalDateTime;
 import java.util.List;
@@ -12,7 +13,7 @@ import java.util.List;
  */
 public interface AdminEventService {
 
-    List<Event> getEvents(List<Long> users,
+    List<EventDto> getEvents(List<Long> users,
                              List<String> states,
                              List<Long> categories,
                              LocalDateTime rangeStart,

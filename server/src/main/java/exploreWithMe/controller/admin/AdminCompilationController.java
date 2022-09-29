@@ -1,6 +1,8 @@
 package exploreWithMe.controller.admin;
 
 import exploreWithMe.model.compilation.Compilation;
+import exploreWithMe.model.compilation.CompilationDto;
+import exploreWithMe.model.compilation.NewCompilationDto;
 import exploreWithMe.service.admin.AdminCompilationService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -19,8 +21,8 @@ public class AdminCompilationController {
     private final AdminCompilationService adminCompilationService;
 
     @PostMapping
-    public Compilation create(@RequestBody Compilation compilation){
-        return adminCompilationService.create(compilation);
+    public CompilationDto create(@RequestBody NewCompilationDto newCompilationDto){
+        return adminCompilationService.create(newCompilationDto);
     }
 
     @DeleteMapping("/{compId}")

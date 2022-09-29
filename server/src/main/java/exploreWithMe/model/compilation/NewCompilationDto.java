@@ -12,7 +12,7 @@ import java.util.List;
 @Setter
 public class NewCompilationDto {
 
-    private List<Integer> events;
+    private List<Long> events;
     private Boolean pinned;
     private String title;
 }

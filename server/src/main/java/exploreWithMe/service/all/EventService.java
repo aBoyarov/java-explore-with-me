@@ -10,15 +10,15 @@ import java.util.List;
  * @author Andrey Boyarov
  */
 public interface EventService {
-    List<EventShortDto> getEvents(String text,
-                                  List<Long> catId,
-                                  Boolean paid,
-                                  LocalDateTime rangeStart,
-                                  LocalDateTime rangeEnd,
-                                  Boolean onlyAvailable,
-                                  String sort,
-                                  Integer from,
-                                  Integer size);
-
-    EventDto getEventById(Long id);
+//    List<EventShortDto> getEvents(String text,
+//                                  List<Long> catId,
+//                                  Boolean paid,
+//                                  LocalDateTime rangeStart,
+//                                  LocalDateTime rangeEnd,
+//                                  Boolean onlyAvailable,
+//                                  String sort,
+//                                  Integer from,
+//                                  Integer size);
+//
+//    EventDto getEventById(Long id);
 }

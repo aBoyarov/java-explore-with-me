@@ -1,13 +1,15 @@
 package exploreWithMe.service.admin;
 
 import exploreWithMe.model.compilation.Compilation;
+import exploreWithMe.model.compilation.CompilationDto;
+import exploreWithMe.model.compilation.NewCompilationDto;
 
 /**
  * @author Andrey Boyarov
  */
 public interface AdminCompilationService {
 
-    Compilation create(Compilation compilation);
+    CompilationDto create(NewCompilationDto newCompilationDto);
 
     void deleteById(Long compId);
 

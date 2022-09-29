@@ -24,21 +24,21 @@ public class EventController {
     private final EventService eventService;
 
 
-    @GetMapping
-    public List<EventShortDto> getEvents(@RequestParam String text,
-                                         @RequestParam List<Long> categories,
-                                         @RequestParam Boolean paid,
-                                         @RequestParam LocalDateTime rangeStart,
-                                         @RequestParam LocalDateTime rangeEnd,
-                                         @RequestParam Boolean onlyAvailable,
-                                         @RequestParam String sort,
-                                         @RequestParam(required = false, defaultValue = "0") Integer from,
-                                         @RequestParam(required = false, defaultValue = "1") Integer size){
-        return eventService.getEvents(text, categories, paid, rangeStart, rangeEnd, onlyAvailable, sort, from, size);
-    }
-
-    @GetMapping("/{id}")
-    public EventDto getEventById(@PathVariable Long id){
-        return eventService.getEventById(id);
-    }
+//    @GetMapping
+//    public List<EventShortDto> getEvents(@RequestParam String text,
+//                                         @RequestParam List<Long> categories,
+//                                         @RequestParam Boolean paid,
+//                                         @RequestParam LocalDateTime rangeStart,
+//                                         @RequestParam LocalDateTime rangeEnd,
+//                                         @RequestParam Boolean onlyAvailable,
+//                                         @RequestParam String sort,
+//                                         @RequestParam(required = false, defaultValue = "0") Integer from,
+//                                         @RequestParam(required = false, defaultValue = "1") Integer size){
+//        return eventService.getEvents(text, categories, paid, rangeStart, rangeEnd, onlyAvailable, sort, from, size);
+//    }
+//
+//    @GetMapping("/{id}")
+//    public EventDto getEventById(@PathVariable Long id){
+//        return eventService.getEventById(id);
+//    }
 }

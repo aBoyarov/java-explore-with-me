@@ -1,8 +1,10 @@
 package exploreWithMe.model.event;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 import exploreWithMe.model.Location;
 import exploreWithMe.model.category.Category;
 import exploreWithMe.model.user.User;
+import exploreWithMe.model.user.UserShortDto;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -21,8 +23,9 @@ public class EventDto {
     private Integer confirmedRequests;
     private LocalDateTime createdOn;
     private String description;
+    @JsonFormat(pattern="yyyy-MM-dd HH:mm:ss")
     private LocalDateTime eventDate;
-    private User initiator;
+    private UserShortDto initiator;
     private Location location;
     private Boolean paid;
     private Integer participantLimit;

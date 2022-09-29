@@ -1,5 +1,6 @@
 package exploreWithMe.service.registered.impl;
 
+import exploreWithMe.map.RequestMapper;
 import exploreWithMe.model.request.Request;
 import exploreWithMe.model.request.RequestDto;
 import exploreWithMe.model.request.RequestState;
@@ -23,8 +24,9 @@ public class UserRequestServiceImpl implements UserRequestService {
 
     private final RequestRepository requestRepository;
     private final UserRepository userRepository;
-
     private final EventRepository eventRepository;
+
+    private final RequestMapper requestMapper;
 
     private final ModelMapper mapper;
     @Override
@@ -40,8 +42,9 @@ public class UserRequestServiceImpl implements UserRequestService {
         Request request = new Request();
         request.setRequester(userRepository.findById(userId).orElseThrow());
         request.setEvent(eventRepository.findById(eventId).orElseThrow());
-        requestRepository.saveAndFlush(request);
-        return toRequestDto(request);
+        request.setStatus(RequestState.PENDING);
+        requestRepository.save(request);
+        return requestMapper.mapToRequestDto(request);
     }
 
     @Override

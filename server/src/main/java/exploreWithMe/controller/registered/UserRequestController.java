@@ -21,19 +21,19 @@ public class UserRequestController {
     private final UserRequestService userRequestService;
 
     @GetMapping
-    public List<RequestDto> getRequests(@PathVariable Long userId){
+    public List<RequestDto> getRequests(@PathVariable Long userId) {
         return userRequestService.getRequests(userId);
     }
 
     @PostMapping
     public RequestDto createRequest(@PathVariable Long userId,
-                                 @RequestParam Long eventId){
+                                    @RequestParam Long eventId) {
         return userRequestService.createRequest(userId, eventId);
     }
 
     @PatchMapping("/{requestId}/cancel")
     public RequestDto cancelRequest(@PathVariable Long userId,
-                                 @PathVariable Long requestId){
+                                    @PathVariable Long requestId) {
         return userRequestService.cancelRequest(userId, requestId);
     }
 }

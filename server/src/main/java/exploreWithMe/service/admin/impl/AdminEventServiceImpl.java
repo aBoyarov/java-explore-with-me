@@ -14,6 +14,7 @@ import org.springframework.stereotype.Service;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.List;
+import java.util.stream.Collectors;
 
 /**
  * @author Andrey Boyarov
@@ -28,19 +29,21 @@ public class AdminEventServiceImpl implements AdminEventService {
 
 
     @Override
-    public List<Event> getEvents(List<Long> users,
-                                 List<String> states,
-                                 List<Long> categories,
-                                 LocalDateTime rangeStart,
-                                 LocalDateTime rangeEnd,
-                                 Integer from,
-                                 Integer size) {
+    public List<EventDto> getEvents(List<Long> users,
+                                    List<String> states,
+                                    List<Long> categories,
+                                    LocalDateTime rangeStart,
+                                    LocalDateTime rangeEnd,
+                                    Integer from,
+                                    Integer size) {
         return repository.getAllEvents(users,
-                states,
-                categories,
-                rangeStart,
-                rangeEnd,
-                PageLimit.of(from, size)).getContent();
+                        states,
+                        categories,
+                        rangeStart,
+                        rangeEnd,
+                        PageLimit.of(from, size)).getContent().stream()
+                .map(event -> mapper.map(event, EventDto.class))
+                .collect(Collectors.toList());
     }
 
     @Override
@@ -66,27 +69,27 @@ public class AdminEventServiceImpl implements AdminEventService {
     Converter<String, LocalDateTime> convert = src -> src
             .getSource() == null ? null : mapToDate(src.getSource());
 
-    private Event mapToEvent(NewEventDto eventDto){
+    private Event mapToEvent(NewEventDto eventDto) {
         mapper.createTypeMap(NewEventDto.class, Event.class)
                 .addMappings(m -> m.using(convert)
                         .map(NewEventDto::getEventDate, Event::setEventDate));
         return mapper.map(eventDto, Event.class);
     }
 
-    private LocalDateTime mapToDate(String date){
+    private LocalDateTime mapToDate(String date) {
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
         return LocalDateTime.parse(date, formatter);
     }
 
-    private EventShortDto toEventShortDto (Event event){
+    private EventShortDto toEventShortDto(Event event) {
         return mapper.map(event, EventShortDto.class);
     }
 
-    private Event toEventFromUpdateDto(EventUpdateDto eventUpdateDto){
+    private Event toEventFromUpdateDto(EventUpdateDto eventUpdateDto) {
         return mapper.map(eventUpdateDto, Event.class);
     }
 
-    private RequestDto toRequestDto (Request request){
+    private RequestDto toRequestDto(Request request) {
         return mapper.map(request, RequestDto.class);
     }
 }

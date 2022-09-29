@@ -3,7 +3,6 @@ package exploreWithMe.model.compilation;
 import exploreWithMe.model.event.EventShortDto;
 import lombok.Getter;
 import lombok.Setter;
-import lombok.ToString;
 
 import java.util.List;
 
@@ -12,7 +11,6 @@ import java.util.List;
  */
 @Getter
 @Setter
-@ToString
 public class CompilationDto {
 
 

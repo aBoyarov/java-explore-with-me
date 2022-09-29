@@ -24,33 +24,33 @@ public class UserEventController {
 
     @GetMapping
     public List<EventShortDto> getEventsByUserId(@PathVariable Long userId,
-                                                @Min(0) @RequestParam(required = false, defaultValue = "0") Integer from,
-                                                @Min(1) @RequestParam(required = false, defaultValue = "1") Integer size) {
+                                                 @Min(0) @RequestParam(required = false, defaultValue = "0") Integer from,
+                                                 @Min(1) @RequestParam(required = false, defaultValue = "1") Integer size) {
         return userEventService.getEventsByUserId(userId, from, size);
     }
 
     @PatchMapping
     public EventDto updateEventByUserId(@PathVariable Long userId,
-                                     @RequestBody EventUpdateDto event) {
+                                        @RequestBody EventUpdateDto event) {
         return userEventService.updateEventByUserId(userId, event);
     }
 
     @PostMapping
-    public NewEventDto createEvent(@PathVariable Long userId,
+    public EventDto createEvent(@PathVariable Long userId,
                                 @RequestBody NewEventDto event) {
         return userEventService.createEvent(userId, event);
     }
 
     @GetMapping("/{eventId}")
     public EventDto getEventById(@PathVariable Long userId,
-                              @PathVariable Long eventId) {
+                                 @PathVariable Long eventId) {
         return userEventService.getEventById(userId, eventId);
     }
 
 
     @PatchMapping("/{eventId}")
     public EventDto eventCancel(@PathVariable Long userId,
-                             @PathVariable Long eventId) {
+                                @PathVariable Long eventId) {
         return userEventService.eventCancel(userId, eventId);
     }
 
@@ -62,15 +62,15 @@ public class UserEventController {
 
     @PatchMapping("/{eventId}/requests/{reqId}/confirm")
     public RequestDto confirmRequest(@PathVariable Long userId,
-                                  @PathVariable Long eventId,
-                                  @PathVariable Long reqId) {
+                                     @PathVariable Long eventId,
+                                     @PathVariable Long reqId) {
         return userEventService.confirmRequest(userId, eventId, reqId);
     }
 
     @PatchMapping("/{eventId}/requests/{reqId}/reject")
     public RequestDto rejectRequest(@PathVariable Long userId,
-                                 @PathVariable Long eventId,
-                                 @PathVariable Long reqId) {
+                                    @PathVariable Long eventId,
+                                    @PathVariable Long reqId) {
         return userEventService.rejectRequest(userId, eventId, reqId);
     }
 }

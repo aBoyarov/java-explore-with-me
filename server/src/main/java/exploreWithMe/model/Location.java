@@ -1,29 +1,22 @@
 package exploreWithMe.model;
 
+import lombok.Builder;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;
 
-import javax.persistence.*;
 import java.util.Objects;
 
 /**
  * @author Andrey Boyarov
  */
-@Entity
-@Table(name = "locations")
+
 @Getter @Setter @ToString
+@Builder
 public class Location {
 
-    @Id
-    @Column(name = "location_id")
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
-
-    @Column(name = "latitude")
     private Double lat;
 
-    @Column(name = "longitude")
     private Double lon;
 
     @Override
@@ -31,11 +24,11 @@ public class Location {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         Location location = (Location) o;
-        return Objects.equals(id, location.id);
+        return Objects.equals(lat, location.lat) && Objects.equals(lon, location.lon);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(id);
+        return Objects.hash(lat, lon);
     }
 }

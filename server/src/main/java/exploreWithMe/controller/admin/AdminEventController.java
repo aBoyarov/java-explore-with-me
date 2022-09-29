@@ -3,9 +3,11 @@ package exploreWithMe.controller.admin;
 import exploreWithMe.model.event.Event;
 import exploreWithMe.model.event.EventDto;
 import exploreWithMe.model.event.NewEventDto;
+import exploreWithMe.model.event.State;
 import exploreWithMe.service.admin.AdminEventService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.web.bind.annotation.*;
 
 import java.time.LocalDateTime;
@@ -24,11 +26,11 @@ public class AdminEventController {
     private final AdminEventService adminEventService;
 
     @GetMapping
-    public List<Event> getEvents(@RequestParam(value = "users") List<Long> users,
-                                 @RequestParam(value = "states") List<String> states,
-                                 @RequestParam(value = "categories") List<Long> categories,
-                                 @RequestParam LocalDateTime rangeStart,
-                                 @RequestParam LocalDateTime rangeEnd,
+    public List<EventDto> getEvents(@RequestParam(value = "users") List<Long>  users,
+                                 @RequestParam(value = "states") List<String>  states,
+                                 @RequestParam(value = "categories") List<Long>  categories,
+                                 @RequestParam @DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss") LocalDateTime rangeStart,
+                                 @RequestParam @DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss") LocalDateTime rangeEnd,
                                  @RequestParam Integer from,
                                  @RequestParam Integer size) {
         return adminEventService.getEvents(users, states, categories, rangeStart, rangeEnd, from,size);
