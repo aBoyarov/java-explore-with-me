@@ -13,12 +13,12 @@ import org.springframework.web.reactive.function.client.WebClient;
 @RequiredArgsConstructor
 public class WebClientConfiguration {
     @Value("${ewm-stats.url}")
-    private String BASE_URL;
+    private String baseUrl;
 
     @Bean
     public WebClient webClientWithTimeout() {
         return WebClient.builder()
-                .baseUrl(BASE_URL)
+                .baseUrl(baseUrl)
                 .build();
     }
 }
