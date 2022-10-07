@@ -6,10 +6,10 @@ import explorewithmeserver.model.event.Event;
 import explorewithmeserver.model.event.EventDto;
 import explorewithmeserver.model.event.EventShortDto;
 import explorewithmeserver.model.event.EventSort;
-import explorewithmeserver.page.PageLimit;
 import explorewithmeserver.repository.EventRepository;
 import explorewithmeserver.service.all.EventService;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
@@ -43,9 +43,9 @@ public class EventServiceImpl implements EventService {
         List<Event> events;
         Pageable page = null;
         if (sort.equals(EventSort.EVENT_DATE.name())) {
-            page = PageLimit.of(from, size, Sort.by("eventDate").descending());
+            page = PageRequest.of(from, size, Sort.by("eventDate").descending());
         } else {
-            page = PageLimit.of(from, size);
+            page = PageRequest.of(from, size);
         }
         if (Objects.isNull(rangeStart) || Objects.isNull(rangeEnd)) {
             rangeStart = LocalDateTime.now();

@@ -4,11 +4,11 @@ import explorewithmeserver.exception.NotFoundException;
 import explorewithmeserver.map.CompilationMapper;
 import explorewithmeserver.model.compilation.Compilation;
 import explorewithmeserver.model.compilation.CompilationDto;
-import explorewithmeserver.page.PageLimit;
 import explorewithmeserver.repository.CompilationRepository;
 import explorewithmeserver.service.all.CompilationService;
 import explorewithmeserver.valid.Validator;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -29,7 +29,7 @@ public class CompilationServiceImpl implements CompilationService {
     @Override
     public List<CompilationDto> getCompilations(Boolean pinned, Integer from, Integer size) {
         List<Compilation> compilations = repository
-                .findCompilationsByPinnedIsOrderByIdAsc(pinned, PageLimit.of(from, size)).getContent();
+                .findCompilationsByPinnedIsOrderByIdAsc(pinned, PageRequest.of(from, size)).getContent();
         return compilations.stream()
                 .map(mapper::mapToCompilationDto)
                 .collect(Collectors.toList());

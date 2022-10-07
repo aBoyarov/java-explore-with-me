@@ -5,11 +5,11 @@ import explorewithmeserver.map.UserMapper;
 import explorewithmeserver.model.user.User;
 import explorewithmeserver.model.user.UserDto;
 import explorewithmeserver.model.user.NewUserDto;
-import explorewithmeserver.page.PageLimit;
 import explorewithmeserver.repository.UserRepository;
 import explorewithmeserver.service.admin.AdminUserService;
 import explorewithmeserver.valid.Validator;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -28,7 +28,7 @@ public class AdminUserServiceImpl implements AdminUserService {
 
     @Override
     public List<UserDto> getUsers(List<Long> ids, Integer from, Integer size) {
-        List<User> list = repository.findAllByIdInOrderByIdAsc(ids, PageLimit.of(from, size)).getContent();
+        List<User> list = repository.findAllByIdInOrderByIdAsc(ids, PageRequest.of(from, size)).getContent();
         return list.stream()
                 .map(mapper::mapToUserDto)
                 .collect(Collectors.toList());

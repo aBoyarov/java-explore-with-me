@@ -3,12 +3,15 @@ package explorewithmeserver.service.admin.impl;
 import explorewithmeserver.exception.ForbiddenException;
 import explorewithmeserver.exception.NotFoundException;
 import explorewithmeserver.map.EventMapper;
-import explorewithmeserver.model.event.*;
-import explorewithmeserver.page.PageLimit;
+import explorewithmeserver.model.event.Event;
+import explorewithmeserver.model.event.EventDto;
+import explorewithmeserver.model.event.EventUpdateDto;
+import explorewithmeserver.model.event.State;
 import explorewithmeserver.repository.EventRepository;
 import explorewithmeserver.service.admin.AdminEventService;
 import explorewithmeserver.valid.Validator;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
@@ -40,7 +43,7 @@ public class AdminEventServiceImpl implements AdminEventService {
                         categories,
                         rangeStart,
                         rangeEnd,
-                        PageLimit.of(from, size)).getContent().stream()
+                        PageRequest.of(from, size)).getContent().stream()
                 .map(mapper::mapToEventDto)
                 .collect(Collectors.toList());
     }

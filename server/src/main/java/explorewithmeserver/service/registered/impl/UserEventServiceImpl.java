@@ -8,13 +8,13 @@ import explorewithmeserver.model.event.*;
 import explorewithmeserver.model.request.Request;
 import explorewithmeserver.model.request.RequestDto;
 import explorewithmeserver.model.request.RequestState;
-import explorewithmeserver.page.PageLimit;
 import explorewithmeserver.repository.EventRepository;
 import explorewithmeserver.repository.RequestRepository;
 import explorewithmeserver.repository.UserRepository;
 import explorewithmeserver.service.registered.UserEventService;
 import lombok.RequiredArgsConstructor;
 import org.modelmapper.ModelMapper;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -38,7 +38,7 @@ public class UserEventServiceImpl implements UserEventService {
 
     @Override
     public List<EventShortDto> getEventsByUserId(Long userId, Integer from, Integer size) {
-        return eventRepository.findEventsByInitiatorId(userId, PageLimit.of(from, size)).getContent().stream()
+        return eventRepository.findEventsByInitiatorId(userId, PageRequest.of(from, size)).getContent().stream()
                 .map(eventMapper::mapToEventShortDto)
                 .collect(Collectors.toList());
     }
