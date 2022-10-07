@@ -41,15 +41,15 @@ public class EventServiceImpl implements EventService {
 
 
         List<Event> events;
-        Pageable pageLimit = null;
+        Pageable page = null;
         if (sort.equals(EventSort.EVENT_DATE.name())) {
-            pageLimit = PageLimit.of(from, size, Sort.by("eventDate").descending());
+            page = PageLimit.of(from, size, Sort.by("eventDate").descending());
         } else {
-            pageLimit = PageLimit.of(from, size);
+            page = PageLimit.of(from, size);
         }
         if (Objects.isNull(rangeStart) || Objects.isNull(rangeEnd)) {
             rangeStart = LocalDateTime.now();
-            return repository.searchEventsIsFuture(text, categories, paid, rangeStart, pageLimit)
+            return repository.searchEventsIsFuture(text, categories, paid, rangeStart, page)
                     .getContent()
                     .stream()
                     .map(mapper::mapToEventShortDto)
@@ -57,9 +57,9 @@ public class EventServiceImpl implements EventService {
         }
         if (onlyAvailable) {
             events = repository.searchEventsOnlyAvailable(text, categories, paid, rangeStart, rangeEnd, sort,
-                    pageLimit).getContent();
+                    page).getContent();
         } else {
-            events = repository.searchEvents(text, categories, paid, rangeStart, rangeEnd, sort, pageLimit).getContent();
+            events = repository.searchEvents(text, categories, paid, rangeStart, rangeEnd, sort, page).getContent();
         }
         eventClient.addViews(request);
         if (sort.equals(EventSort.VIEWS.name())) {
