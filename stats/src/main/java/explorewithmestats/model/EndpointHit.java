@@ -22,12 +22,16 @@ public class EndpointHit {
     @Column(name = "id")
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
+
     @Column(name = "app")
     private String app;
+
     @Column(name = "uri")
     private String uri;
+
     @Column(name = "ip")
     private String ip;
+
     @Column(name = "time")
     @JsonFormat(pattern="yyyy-MM-dd HH:mm:ss")
     private LocalDateTime time;
