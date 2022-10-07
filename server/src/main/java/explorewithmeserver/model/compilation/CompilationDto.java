@@ -13,7 +13,6 @@ import java.util.List;
 @Setter
 public class CompilationDto {
 
-
     private Long id;
 
     private List<EventShortDto> events;

@@ -5,9 +5,9 @@ package explorewithmestats.model;
  */
 public interface ViewStats {
 
-     String  getApp();
+    String getApp();
 
-     String getUri();
+    String getUri();
 
-     Long getHits();
+    Long getHits();
 }

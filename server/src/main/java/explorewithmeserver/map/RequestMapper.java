@@ -24,7 +24,7 @@ public class RequestMapper {
     Converter<Event, Long> convertEvent = src -> src
             .getSource() == null ? null : src.getSource().getId();
 
-    public RequestDto mapToRequestDto(Request request){
+    public RequestDto mapToRequestDto(Request request) {
         mapper.typeMap(Request.class, RequestDto.class)
                 .addMappings(m -> m.using(convertUser)
                         .map(Request::getRequester, RequestDto::setRequester))

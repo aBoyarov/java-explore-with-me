@@ -17,7 +17,7 @@ public class WebClientConfiguration {
 
     @Bean
     public WebClient webClientWithTimeout() {
-               return WebClient.builder()
+        return WebClient.builder()
                 .baseUrl(BASE_URL)
                 .build();
     }

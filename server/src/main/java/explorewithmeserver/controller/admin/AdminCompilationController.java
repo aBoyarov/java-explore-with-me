@@ -25,7 +25,7 @@ public class AdminCompilationController {
     private final AdminCompilationService adminCompilationService;
 
     @PostMapping
-    public CompilationDto create(@Valid @RequestBody NewCompilationDto newCompilationDto){
+    public CompilationDto create(@Valid @RequestBody NewCompilationDto newCompilationDto) {
         return adminCompilationService.create(newCompilationDto);
     }
 
@@ -42,7 +42,7 @@ public class AdminCompilationController {
 
     @PatchMapping("/{compId}/events/{eventId}")
     public CompilationDto addEventToCompilation(@PathVariable Long compId,
-                                             @PathVariable Long eventId) throws NotFoundException {
+                                                @PathVariable Long eventId) throws NotFoundException {
         return adminCompilationService.addEventToCompilation(compId, eventId);
     }
 

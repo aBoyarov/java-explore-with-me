@@ -8,7 +8,9 @@ import java.util.Objects;
  * @author Andrey Boyarov
  */
 
-@Getter @Setter @ToString
+@Getter
+@Setter
+@ToString
 @Builder
 public class Location {
 

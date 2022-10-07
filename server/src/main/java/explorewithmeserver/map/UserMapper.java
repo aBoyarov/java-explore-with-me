@@ -17,11 +17,11 @@ public class UserMapper {
     private final ModelMapper mapper;
 
 
-    public User mapToUser(NewUserDto newUserDto){
+    public User mapToUser(NewUserDto newUserDto) {
         return mapper.map(newUserDto, User.class);
     }
 
-    public UserDto mapToUserDto(User user){
+    public UserDto mapToUserDto(User user) {
         return mapper.map(user, UserDto.class);
     }
 }

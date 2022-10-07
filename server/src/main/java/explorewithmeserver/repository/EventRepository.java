@@ -38,10 +38,10 @@ public interface EventRepository extends JpaRepository<Event, Long> {
             "and e.eventDate < :rangeStart " +
             "and e.confirmedRequests < e.participantLimit ")
     Page<Event> searchEventsIsFuture(String text,
-                                          List<Long> catId,
-                                          Boolean paid,
-                                          LocalDateTime rangeStart,
-                                          Pageable pageable);
+                                     List<Long> catId,
+                                     Boolean paid,
+                                     LocalDateTime rangeStart,
+                                     Pageable pageable);
 
 
     @Query("from Event e " +
@@ -62,7 +62,7 @@ public interface EventRepository extends JpaRepository<Event, Long> {
             "where e.initiator.id in ?1 or ?1 is null " +
             "and e.state in ?2 or ?2 is null " +
             "and e.category.id in ?3 or ?3 is null " +
-            "and e.eventDate between ?4 and ?5" )
+            "and e.eventDate between ?4 and ?5")
     Page<Event> getAllEvents(List<Long> users,
                              List<State> states,
                              List<Long> categories,

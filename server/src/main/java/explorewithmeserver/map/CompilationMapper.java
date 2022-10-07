@@ -26,13 +26,13 @@ public class CompilationMapper {
 
     private final EventMapper eventMapper;
 
-    public Compilation mapToCompilation(NewCompilationDto newCompilationDto){
+    public Compilation mapToCompilation(NewCompilationDto newCompilationDto) {
         Compilation compilation = modelMapper.map(newCompilationDto, Compilation.class);
         compilation.setEvents(mapToUserShortDto(newCompilationDto.getEvents()));
         return compilation;
     }
 
-    public CompilationDto mapToCompilationDto(Compilation compilation){
+    public CompilationDto mapToCompilationDto(Compilation compilation) {
         List<EventShortDto> events = compilation.getEvents().stream()
                 .map(eventMapper::mapToEventShortDto)
                 .collect(Collectors.toList());
@@ -41,7 +41,7 @@ public class CompilationMapper {
         return compilationDto;
     }
 
-    private List<Event> mapToUserShortDto(List<Long> ids){
+    private List<Event> mapToUserShortDto(List<Long> ids) {
         return eventRepository.findEventsById(ids);
     }
 }

@@ -13,7 +13,9 @@ import java.util.Objects;
 
 @Entity
 @Table(name = "users")
-@Getter @Setter @ToString
+@Getter
+@Setter
+@ToString
 public class User {
     @Id
     @Column(name = "user_id")

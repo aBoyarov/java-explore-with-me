@@ -57,7 +57,7 @@ public class UserEventServiceImpl implements UserEventService {
 
         eventMapper.mapToEvent(eventUpdateDto, event);
 
-        if(event.getState().equals(State.CANCELED)){
+        if (event.getState().equals(State.CANCELED)) {
             event.setState(State.PENDING);
         }
 

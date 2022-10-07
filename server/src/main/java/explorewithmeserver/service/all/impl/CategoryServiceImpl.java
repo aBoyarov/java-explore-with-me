@@ -25,6 +25,7 @@ public class CategoryServiceImpl implements CategoryService {
 
     private final Validator validator;
     private final CategoryMapper mapper;
+
     @Override
     public List<CategoryDto> getCategories(Integer from, Integer size) {
         List<Category> categories = repository

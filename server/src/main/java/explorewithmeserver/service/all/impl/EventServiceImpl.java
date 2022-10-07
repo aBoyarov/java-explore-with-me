@@ -40,7 +40,6 @@ public class EventServiceImpl implements EventService {
                                             Integer size, HttpServletRequest request) {
 
 
-
         List<Event> events;
         Pageable pageLimit = null;
         if (sort.equals(EventSort.EVENT_DATE.name())) {

@@ -13,7 +13,9 @@ import java.util.Objects;
 
 @Entity
 @Table(name = "categories")
-@Getter @Setter @ToString
+@Getter
+@Setter
+@ToString
 public class Category {
     @Id
     @Column(name = "category_id")

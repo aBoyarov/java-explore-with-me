@@ -28,7 +28,7 @@ public class AdminUserServiceImpl implements AdminUserService {
 
     @Override
     public List<UserDto> getUsers(List<Long> ids, Integer from, Integer size) {
-        List<User> list = repository.findAllByIdInOrderByIdAsc(ids, PageLimit.of(from,size)).getContent();
+        List<User> list = repository.findAllByIdInOrderByIdAsc(ids, PageLimit.of(from, size)).getContent();
         return list.stream()
                 .map(mapper::mapToUserDto)
                 .collect(Collectors.toList());

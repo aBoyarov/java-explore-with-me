@@ -9,7 +9,7 @@ import explorewithmeserver.model.category.NewCategoryDto;
  */
 public interface AdminCategoryService {
 
-    CategoryDto update (CategoryDto categoryDto) throws NotFoundException;
+    CategoryDto update(CategoryDto categoryDto) throws NotFoundException;
 
     CategoryDto create(NewCategoryDto category);
 

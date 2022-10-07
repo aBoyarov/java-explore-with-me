@@ -29,6 +29,7 @@ public class UserRequestServiceImpl implements UserRequestService {
     private final RequestMapper requestMapper;
 
     private final ModelMapper mapper;
+
     @Override
     public List<RequestDto> getRequests(Long userId) {
         List<Request> requests = requestRepository.findAllRequestsByUserId(userId);
@@ -55,7 +56,7 @@ public class UserRequestServiceImpl implements UserRequestService {
         return requestMapper.mapToRequestDto(request);
     }
 
-    private RequestDto toRequestDto(Request request){
-       return mapper.map(request, RequestDto.class);
+    private RequestDto toRequestDto(Request request) {
+        return mapper.map(request, RequestDto.class);
     }
 }
