@@ -30,6 +30,19 @@ public interface EventRepository extends JpaRepository<Event, Long> {
                                           String sort,
                                           Pageable pageable);
 
+    @Query("from Event e " +
+            "where (upper(e.annotation) like upper(concat('%', :text, '%')) " +
+            "or upper(e.description) like upper(concat('%', :text, '%'))) " +
+            "and e.category.id in (:catId) " +
+            "and e.paid = :paid " +
+            "and e.eventDate < :rangeStart " +
+            "and e.confirmedRequests < e.participantLimit ")
+    Page<Event> searchEventsIsFuture(String text,
+                                          List<Long> catId,
+                                          Boolean paid,
+                                          LocalDateTime rangeStart,
+                                          Pageable pageable);
+
 
     @Query("from Event e " +
             "where (upper(e.annotation) like upper(concat('%', ?1, '%')) " +

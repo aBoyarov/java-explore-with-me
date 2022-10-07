@@ -1,5 +1,6 @@
 package exploreWithMeServer.service.all;
 
+import exploreWithMeServer.exception.NotFoundException;
 import exploreWithMeServer.model.compilation.CompilationDto;
 
 import java.util.List;
@@ -10,5 +11,5 @@ import java.util.List;
 public interface CompilationService {
     List<CompilationDto> getCompilations(Boolean pinned, Integer from, Integer size);
 
-    CompilationDto getCompilationById(Long compId);
+    CompilationDto getCompilationById(Long compId) throws NotFoundException;
 }

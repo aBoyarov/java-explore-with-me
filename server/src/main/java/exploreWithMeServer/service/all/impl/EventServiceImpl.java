@@ -1,19 +1,24 @@
 package exploreWithMeServer.service.all.impl;
 
-import exploreWithMeServer.controller.all.EventClient;
+import exploreWithMeServer.client.EventClient;
 import exploreWithMeServer.map.EventMapper;
 import exploreWithMeServer.model.event.Event;
 import exploreWithMeServer.model.event.EventDto;
 import exploreWithMeServer.model.event.EventShortDto;
+import exploreWithMeServer.model.event.EventSort;
 import exploreWithMeServer.page.PageLimit;
 import exploreWithMeServer.repository.EventRepository;
 import exploreWithMeServer.service.all.EventService;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
 import javax.servlet.http.HttpServletRequest;
 import java.time.LocalDateTime;
+import java.util.Comparator;
 import java.util.List;
+import java.util.Objects;
 import java.util.stream.Collectors;
 
 /**
@@ -30,47 +35,52 @@ public class EventServiceImpl implements EventService {
     private final EventMapper mapper;
 
     @Override
-    public List<EventShortDto> searchEvents(String text,
-                                            List<Long> categories,
-                                            Boolean paid,
-                                            LocalDateTime rangeStart,
-                                            LocalDateTime rangeEnd,
-                                            Boolean onlyAvailable,
-                                            String sort,
-                                            Integer from,
-                                            Integer size,
-                                            HttpServletRequest request) {
-        eventClient.addViews(request);
-        List<Event> events;
-        if (onlyAvailable) {
-            events = repository.searchEventsOnlyAvailable(
-                    text,
-                    categories,
-                    paid,
-                    rangeStart,
-                    rangeEnd,
-                    sort,
-                    PageLimit.of(from, size)).getContent();
+    public List<EventShortDto> searchEvents(String text, List<Long> categories, Boolean paid, LocalDateTime rangeStart,
+                                            LocalDateTime rangeEnd, Boolean onlyAvailable, String sort, Integer from,
+                                            Integer size, HttpServletRequest request) {
 
+
+
+        List<Event> events;
+        Pageable pageLimit = null;
+        if (sort.equals(EventSort.EVENT_DATE.name())) {
+            pageLimit = PageLimit.of(from, size, Sort.by("eventDate").descending());
         } else {
-            events = repository.searchEvents(text,
-                    categories,
-                    paid,
-                    rangeStart,
-                    rangeEnd,
-                    sort,
-                    PageLimit.of(from, size)).getContent();
+            pageLimit = PageLimit.of(from, size);
+        }
+        if (Objects.isNull(rangeStart) || Objects.isNull(rangeEnd)) {
+            rangeStart = LocalDateTime.now();
+            return repository.searchEventsIsFuture(text, categories, paid, rangeStart, pageLimit)
+                    .getContent()
+                    .stream()
+                    .map(mapper::mapToEventShortDto)
+                    .collect(Collectors.toList());
+        }
+        if (onlyAvailable) {
+            events = repository.searchEventsOnlyAvailable(text, categories, paid, rangeStart, rangeEnd, sort,
+                    pageLimit).getContent();
+        } else {
+            events = repository.searchEvents(text, categories, paid, rangeStart, rangeEnd, sort, pageLimit).getContent();
+        }
+        eventClient.addViews(request);
+        if (sort.equals(EventSort.VIEWS.name())) {
+            return events.stream()
+                    .map(mapper::mapToEventShortDto)
+                    .sorted(Comparator.comparingLong(EventShortDto::getViews).reversed())
+                    .collect(Collectors.toList());
         }
         return events.stream()
                 .map(mapper::mapToEventShortDto)
                 .collect(Collectors.toList());
     }
 
+
     @Override
     public EventDto getEventById(Long id, HttpServletRequest request) {
-        eventClient.addViews(request);
         Event event = repository.findById(id).orElseThrow();
-        return mapper.mapToEventDto(event);
+        EventDto eventDto = mapper.mapToEventDto(event);
+        eventClient.addViews(request);
+        return eventDto;
     }
 
 

@@ -27,6 +27,6 @@ public class NewEndpointHit {
     @NotEmpty
     private String ip;
     @NotEmpty
-    @JsonFormat(pattern="yyyy-MM-dd HH:mm:ss")
+    @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")
     private LocalDateTime time;
 }

@@ -1,5 +1,6 @@
 package exploreWithMeServer.controller.all;
 
+import exploreWithMeServer.exception.NotFoundException;
 import exploreWithMeServer.model.compilation.CompilationDto;
 import exploreWithMeServer.service.all.CompilationService;
 import lombok.RequiredArgsConstructor;
@@ -20,14 +21,14 @@ public class CompilationController {
     private final CompilationService compilationService;
 
     @GetMapping
-    public List<CompilationDto> getCompilations(@RequestParam Boolean pinned,
-                                                @RequestParam Integer from,
-                                                @RequestParam Integer size){
+    public List<CompilationDto> getCompilations(@RequestParam(required = false) Boolean pinned,
+                                                @RequestParam(required = false, defaultValue = "0") Integer from,
+                                                @RequestParam(required = false, defaultValue = "10") Integer size){
         return compilationService.getCompilations(pinned, from, size);
     }
 
     @GetMapping("/{compId}")
-    public CompilationDto getCompilationById(@PathVariable Long compId){
+    public CompilationDto getCompilationById(@PathVariable Long compId) throws NotFoundException {
         return compilationService.getCompilationById(compId);
     }
 }

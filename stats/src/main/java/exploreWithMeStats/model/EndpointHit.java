@@ -2,7 +2,6 @@ package exploreWithMeStats.model;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
 import lombok.*;
-import org.hibernate.annotations.GeneratorType;
 
 import javax.persistence.*;
 import java.time.LocalDateTime;

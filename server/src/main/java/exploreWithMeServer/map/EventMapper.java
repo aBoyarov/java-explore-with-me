@@ -1,13 +1,20 @@
 package exploreWithMeServer.map;
 
+import exploreWithMeServer.client.EventClient;
 import exploreWithMeServer.model.Location;
 import exploreWithMeServer.model.category.Category;
 import exploreWithMeServer.model.event.*;
 import exploreWithMeServer.repository.CategoryRepository;
+import exploreWithMeStats.model.ViewStatsDto;
 import lombok.RequiredArgsConstructor;
 import org.modelmapper.Converter;
 import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Component;
+
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
+import java.util.Collections;
+import java.util.List;
 
 /**
  * @author Andrey Boyarov
@@ -19,6 +26,8 @@ public class EventMapper {
     private final ModelMapper mapper;
 
     private final CategoryRepository categoryRepository;
+
+    private final EventClient client;
 
 
     Converter<Long, Category> convertToCategory = src -> src
@@ -40,6 +49,7 @@ public class EventMapper {
                 .lat(event.getLatitude())
                 .lon(event.getLongitude())
                 .build());
+        setViews(event, eventDto);
         return eventDto;
     }
 
@@ -62,8 +72,44 @@ public class EventMapper {
         mapper.map(eventUpdateDto, event);
     }
 
-    public EventShortDto mapToEventShortDto(Event event){
-        return mapper.map(event, EventShortDto.class);
+    public EventShortDto mapToEventShortDto(Event event) {
+        EventShortDto eventShortDto = mapper.map(event, EventShortDto.class);
+        setViews(event, eventShortDto);
+        return eventShortDto;
+    }
+
+    private void setViews(Event event, EventShortDto eventShortDto) {
+        String uri = "/events/" + event.getId();
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
+        List<ViewStatsDto> views = client.getViews(
+                event.getCreatedOn().format(formatter),
+                LocalDateTime.now().format(formatter),
+                Collections.singletonList(uri),
+                false);
+        if (!views.isEmpty()) {
+            ViewStatsDto view = views
+                    .stream()
+                    .filter(viewStats -> viewStats.getUri().equals(uri))
+                    .findAny().orElseThrow();
+            eventShortDto.setViews(view.getHits());
+        }
+    }
+
+    private void setViews(Event event, EventDto eventDto) {
+        String uri = "/events/" + event.getId();
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
+        List<ViewStatsDto> views = client.getViews(
+                event.getCreatedOn().format(formatter),
+                LocalDateTime.now().format(formatter),
+                Collections.singletonList(uri),
+                false);
+        if (!views.isEmpty()) {
+            ViewStatsDto view = views
+                    .stream()
+                    .filter(viewStats -> viewStats.getUri().equals(uri))
+                    .findAny().orElseThrow();
+            eventDto.setViews(view.getHits());
+        }
     }
 
 

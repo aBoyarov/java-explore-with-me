@@ -34,5 +34,5 @@ public class EventDto {
     private Boolean requestModeration;
     private String state;
     private String title;
-    private Integer views;
+    private Long views;
 }

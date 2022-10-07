@@ -1,8 +1,7 @@
 package exploreWithMeStats.controller;
 
 import exploreWithMeStats.model.NewEndpointHit;
-import exploreWithMeStats.model.ViewStats;
-
+import exploreWithMeStats.model.ViewStatsDto;
 import exploreWithMeStats.service.StatsService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -28,12 +27,12 @@ public class StatsController {
     }
 
     @GetMapping("/stats")
-    public List<ViewStats> getStats(@RequestParam
-                                    @DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss") LocalDateTime start,
-                                    @RequestParam
-                                    @DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss") LocalDateTime end,
-                                    @RequestParam(required = false) List<String> uris,
-                                    @RequestParam(defaultValue = "false") Boolean unique) {
+    public List<ViewStatsDto> getStats(@RequestParam
+                                       @DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss") LocalDateTime start,
+                                       @RequestParam
+                                       @DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss") LocalDateTime end,
+                                       @RequestParam(required = false) List<String> uris,
+                                       @RequestParam(defaultValue = "false") Boolean unique) {
         return statsService.getStats(start, end, uris, unique);
     }
 }

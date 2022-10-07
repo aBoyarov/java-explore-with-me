@@ -1,5 +1,6 @@
 package exploreWithMeServer.controller.all;
 
+import exploreWithMeServer.exception.NotFoundException;
 import exploreWithMeServer.model.category.CategoryDto;
 import exploreWithMeServer.service.all.CategoryService;
 import lombok.RequiredArgsConstructor;
@@ -23,13 +24,13 @@ public class CategoryController {
 
     @GetMapping
     public List<CategoryDto> getCategories(@Min(0) @RequestParam(required = false, defaultValue = "0") Integer from,
-                                           @Min(1) @RequestParam(required = false, defaultValue = "1") Integer size){
+                                           @Min(1) @RequestParam(required = false, defaultValue = "10") Integer size){
         return categoryService.getCategories(from, size);
     }
 
 
     @GetMapping("/{catId}")
-    public CategoryDto getCategoryById(@PathVariable Long catId){
+    public CategoryDto getCategoryById(@PathVariable Long catId) throws NotFoundException {
         return categoryService.getCategoryById(catId);
     }
 }
