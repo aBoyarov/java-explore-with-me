@@ -13,7 +13,6 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
-
 import javax.servlet.http.HttpServletRequest;
 import java.time.LocalDateTime;
 import java.util.Comparator;
@@ -41,7 +40,7 @@ public class EventServiceImpl implements EventService {
 
 
         List<Event> events;
-        Pageable page = null;
+        Pageable page;
         if (sort.equals(EventSort.EVENT_DATE.name())) {
             page = PageRequest.of(from, size, Sort.by("eventDate").descending());
         } else {

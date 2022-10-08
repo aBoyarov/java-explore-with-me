@@ -1,6 +1,5 @@
 package explorewithmeserver.model.event;
 
-import com.fasterxml.jackson.annotation.JsonFormat;
 import explorewithmeserver.model.category.Category;
 import explorewithmeserver.model.compilation.Compilation;
 import explorewithmeserver.model.user.User;
@@ -32,7 +31,7 @@ public class Event {
     @Column(name = "annotation")
     private String annotation;
 
-    @ManyToOne(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
+    @ManyToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "category_id", referencedColumnName = "category_id")
     private Category category;
 
@@ -40,17 +39,15 @@ public class Event {
     private Integer confirmedRequests;
 
     @Column(name = "created_on")
-    @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")
     private LocalDateTime createdOn = LocalDateTime.now();
 
     @Column(name = "description")
     private String description;
 
     @Column(name = "event_date")
-    @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")
     private LocalDateTime eventDate;
 
-    @ManyToOne(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
+    @ManyToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "initiator_id", referencedColumnName = "user_id")
     private User initiator;
 
@@ -67,7 +64,6 @@ public class Event {
     private Integer participantLimit;
 
     @Column(name = "published_on")
-    @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")
     private LocalDateTime publishedOn;
 
     @Column(name = "request_moderation")

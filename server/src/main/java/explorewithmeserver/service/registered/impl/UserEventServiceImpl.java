@@ -114,11 +114,6 @@ public class UserEventServiceImpl implements UserEventService {
         return toRequestDto(request);
     }
 
-
-    private Event toEventFromUpdateDto(EventUpdateDto eventUpdateDto) {
-        return modelMapper.map(eventUpdateDto, Event.class);
-    }
-
     private RequestDto toRequestDto(Request request) {
         return modelMapper.map(request, RequestDto.class);
     }

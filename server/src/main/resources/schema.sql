@@ -32,15 +32,15 @@ CREATE TABLE IF NOT EXISTS events
     created_on TIMESTAMP NOT NULL,
     latitude FLOAT NOT NULL,
     longitude FLOAT NOT NULL,
-    description VARCHAR NOT NULL,
+    description VARCHAR,
     event_date TIMESTAMP NOT NULL,
     initiator_id BIGINT REFERENCES users(user_id),
     paid BOOLEAN NOT NULL,
     participant_limit INT NOT NULL,
     published_on TIMESTAMP,
     request_moderation BOOLEAN NOT NULL,
-    state VARCHAR,
-    title VARCHAR NOT NULL
+    state VARCHAR(24),
+    title VARCHAR(100) NOT NULL
 );
 
 CREATE TABLE IF NOT EXISTS event_compilation
@@ -55,5 +55,5 @@ CREATE TABLE IF NOT EXISTS requests
     created TIMESTAMP NOT NULL,
     event_id BIGINT REFERENCES events(event_id) ON DELETE CASCADE,
     requester_id BIGINT REFERENCES users(user_id) ON DELETE CASCADE,
-    status VARCHAR(20) NOT NULL
+    status VARCHAR(24) NOT NULL
 );

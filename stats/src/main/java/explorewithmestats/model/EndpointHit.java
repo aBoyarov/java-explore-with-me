@@ -1,6 +1,5 @@
 package explorewithmestats.model;
 
-import com.fasterxml.jackson.annotation.JsonFormat;
 import lombok.*;
 
 import javax.persistence.*;
@@ -33,6 +32,5 @@ public class EndpointHit {
     private String ip;
 
     @Column(name = "time")
-    @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")
     private LocalDateTime time;
 }

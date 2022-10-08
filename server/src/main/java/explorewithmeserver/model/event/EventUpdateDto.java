@@ -1,6 +1,5 @@
 package explorewithmeserver.model.event;
 
-import com.fasterxml.jackson.annotation.JsonFormat;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -17,7 +16,6 @@ public class EventUpdateDto {
     private String annotation;
     private Long category;
     private String description;
-    @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")
     private LocalDateTime eventDate;
     private Boolean paid;
     private Integer participantLimit;
