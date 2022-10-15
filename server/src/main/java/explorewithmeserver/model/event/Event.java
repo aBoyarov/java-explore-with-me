@@ -1,6 +1,7 @@
 package explorewithmeserver.model.event;
 
 import explorewithmeserver.model.category.Category;
+import explorewithmeserver.model.comment.Comment;
 import explorewithmeserver.model.compilation.Compilation;
 import explorewithmeserver.model.user.User;
 import lombok.Getter;
@@ -78,7 +79,8 @@ public class Event {
 
     @ManyToMany(mappedBy = "events")
     @ToString.Exclude
-    Set<Compilation> compilations;
+    private Set<Compilation> compilations;
+
 
     @Override
     public boolean equals(Object o) {

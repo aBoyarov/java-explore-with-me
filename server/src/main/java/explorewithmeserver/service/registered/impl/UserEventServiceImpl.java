@@ -2,12 +2,17 @@ package explorewithmeserver.service.registered.impl;
 
 import explorewithmeserver.exception.ForbiddenException;
 import explorewithmeserver.exception.NotFoundException;
+import explorewithmeserver.map.CommentMapper;
 import explorewithmeserver.map.EventMapper;
 import explorewithmeserver.map.RequestMapper;
+import explorewithmeserver.model.comment.Comment;
+import explorewithmeserver.model.comment.CommentDto;
+import explorewithmeserver.model.comment.NewCommentDto;
 import explorewithmeserver.model.event.*;
 import explorewithmeserver.model.request.Request;
 import explorewithmeserver.model.request.RequestDto;
 import explorewithmeserver.model.request.RequestState;
+import explorewithmeserver.repository.CommentRepository;
 import explorewithmeserver.repository.EventRepository;
 import explorewithmeserver.repository.RequestRepository;
 import explorewithmeserver.repository.UserRepository;
@@ -17,6 +22,7 @@ import org.modelmapper.ModelMapper;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDateTime;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -33,8 +39,9 @@ public class UserEventServiceImpl implements UserEventService {
     private final UserRepository userRepository;
     private final EventMapper eventMapper;
     private final ModelMapper modelMapper;
-
     private final RequestMapper requestMapper;
+    private final CommentRepository commentRepository;
+    private final CommentMapper commentMapper;
 
     @Override
     public List<EventShortDto> getEventsByUserId(Long userId, Integer from, Integer size) {
@@ -112,6 +119,21 @@ public class UserEventServiceImpl implements UserEventService {
         request.setStatus(RequestState.REJECTED);
         requestRepository.saveAndFlush(request);
         return toRequestDto(request);
+    }
+
+    @Override
+    public CommentDto addComment(Long userId, Long eventId, NewCommentDto newCommentDto) {
+        Comment comment = new Comment();
+        comment.setText(newCommentDto.getText());
+        comment.setAuthor(userRepository.findById(userId).orElseThrow());
+        comment.setTime(LocalDateTime.now());
+        comment.setEvent(eventRepository.findById(eventId).orElseThrow());
+        return commentMapper.mapToCommentDto(commentRepository.save(comment));
+    }
+
+    @Override
+    public void deleteComment(Long userId, Long eventId, Long commentId) {
+        commentRepository.deleteById(commentId);
     }
 
     private RequestDto toRequestDto(Request request) {

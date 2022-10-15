@@ -22,9 +22,9 @@ import java.util.stream.Collectors;
 public class CategoryServiceImpl implements CategoryService {
 
     private final CategoryRepository repository;
-
     private final Validator validator;
     private final CategoryMapper mapper;
+
 
     @Override
     public List<CategoryDto> getCategories(Integer from, Integer size) {
@@ -34,11 +34,10 @@ public class CategoryServiceImpl implements CategoryService {
         return categories.stream().map(mapper::mapToCategoryDto).collect(Collectors.toList());
     }
 
+
     @Override
     public CategoryDto getCategoryById(Long catId) throws NotFoundException {
         Category category = validator.validCategory(catId);
         return mapper.mapToCategoryDto(category);
     }
-
-
 }

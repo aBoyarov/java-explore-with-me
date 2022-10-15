@@ -17,6 +17,7 @@ import java.time.LocalDateTime;
 @Setter
 @ToString
 public class Request {
+
     @Id
     @Column(name = "request_id")
     @GeneratedValue(strategy = GenerationType.IDENTITY)

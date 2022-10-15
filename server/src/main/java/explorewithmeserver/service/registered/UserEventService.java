@@ -2,6 +2,8 @@ package explorewithmeserver.service.registered;
 
 import explorewithmeserver.exception.ForbiddenException;
 import explorewithmeserver.exception.NotFoundException;
+import explorewithmeserver.model.comment.CommentDto;
+import explorewithmeserver.model.comment.NewCommentDto;
 import explorewithmeserver.model.event.*;
 import explorewithmeserver.model.request.RequestDto;
 
@@ -26,4 +28,8 @@ public interface UserEventService {
     RequestDto confirmRequest(Long userId, Long eventId, Long reqId);
 
     RequestDto rejectRequest(Long userId, Long eventId, Long reqId);
+
+    CommentDto addComment(Long userId, Long eventId, NewCommentDto newCommentDto);
+
+    void deleteComment(Long userId, Long eventId, Long commentId);
 }

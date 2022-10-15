@@ -37,8 +37,6 @@ public class EventServiceImpl implements EventService {
     public List<EventShortDto> searchEvents(String text, List<Long> categories, Boolean paid, LocalDateTime rangeStart,
                                             LocalDateTime rangeEnd, Boolean onlyAvailable, String sort, Integer from,
                                             Integer size, HttpServletRequest request) {
-
-
         List<Event> events;
         Pageable page;
         if (sort.equals(EventSort.EVENT_DATE.name())) {
