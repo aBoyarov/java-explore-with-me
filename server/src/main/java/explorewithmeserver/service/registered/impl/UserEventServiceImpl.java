@@ -12,11 +12,13 @@ import explorewithmeserver.model.event.*;
 import explorewithmeserver.model.request.Request;
 import explorewithmeserver.model.request.RequestDto;
 import explorewithmeserver.model.request.RequestState;
+import explorewithmeserver.model.user.User;
 import explorewithmeserver.repository.CommentRepository;
 import explorewithmeserver.repository.EventRepository;
 import explorewithmeserver.repository.RequestRepository;
 import explorewithmeserver.repository.UserRepository;
 import explorewithmeserver.service.registered.UserEventService;
+import explorewithmeserver.valid.Validator;
 import lombok.RequiredArgsConstructor;
 import org.modelmapper.ModelMapper;
 import org.springframework.data.domain.PageRequest;
@@ -38,6 +40,7 @@ public class UserEventServiceImpl implements UserEventService {
     private final RequestRepository requestRepository;
     private final UserRepository userRepository;
     private final EventMapper eventMapper;
+    private final Validator validator;
     private final ModelMapper modelMapper;
     private final RequestMapper requestMapper;
     private final CommentRepository commentRepository;
@@ -122,7 +125,9 @@ public class UserEventServiceImpl implements UserEventService {
     }
 
     @Override
-    public CommentDto addComment(Long userId, Long eventId, NewCommentDto newCommentDto) {
+    public CommentDto addComment(Long userId, Long eventId, NewCommentDto newCommentDto) throws NotFoundException {
+        validator.validUser(userId);
+        validator.validEvent(eventId);
         Comment comment = new Comment();
         comment.setText(newCommentDto.getText());
         comment.setAuthor(userRepository.findById(userId).orElseThrow());
@@ -132,7 +137,9 @@ public class UserEventServiceImpl implements UserEventService {
     }
 
     @Override
-    public void deleteComment(Long userId, Long eventId, Long commentId) {
+    public void deleteComment(Long userId, Long eventId, Long commentId) throws NotFoundException {
+        validator.validUser(userId);
+        validator.validEvent(eventId);
         commentRepository.deleteById(commentId);
     }
 

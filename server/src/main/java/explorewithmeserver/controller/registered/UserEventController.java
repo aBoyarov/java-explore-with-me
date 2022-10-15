@@ -80,14 +80,14 @@ public class UserEventController {
     @PostMapping("/{eventId}/comment")
     public CommentDto addComment(@PathVariable Long userId,
                                  @PathVariable Long eventId,
-                                 @RequestBody NewCommentDto newCommentDto) {
+                                 @RequestBody NewCommentDto newCommentDto) throws NotFoundException {
         return userEventService.addComment(userId, eventId, newCommentDto);
     }
 
     @DeleteMapping("/{eventId}/comment/{commentId}")
     public void deleteComment(@PathVariable Long userId,
                               @PathVariable Long eventId,
-                              @PathVariable Long commentId) {
+                              @PathVariable Long commentId) throws NotFoundException {
         userEventService.deleteComment(userId, eventId, commentId);
     }
 }

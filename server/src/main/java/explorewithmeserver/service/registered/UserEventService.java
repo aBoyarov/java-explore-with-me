@@ -29,7 +29,7 @@ public interface UserEventService {
 
     RequestDto rejectRequest(Long userId, Long eventId, Long reqId);
 
-    CommentDto addComment(Long userId, Long eventId, NewCommentDto newCommentDto);
+    CommentDto addComment(Long userId, Long eventId, NewCommentDto newCommentDto) throws NotFoundException;
 
-    void deleteComment(Long userId, Long eventId, Long commentId);
+    void deleteComment(Long userId, Long eventId, Long commentId) throws NotFoundException;
 }
