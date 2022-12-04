@@ -6,6 +6,7 @@ import explorewithmeserver.model.event.Event;
 import explorewithmeserver.model.event.EventDto;
 import explorewithmeserver.model.event.EventShortDto;
 import explorewithmeserver.model.event.EventSort;
+import explorewithmeserver.repository.CriteriaRepository;
 import explorewithmeserver.repository.EventRepository;
 import explorewithmeserver.service.all.EventService;
 import lombok.RequiredArgsConstructor;
@@ -33,41 +34,17 @@ public class EventServiceImpl implements EventService {
 
     private final EventMapper mapper;
 
+    private final CriteriaRepository criteriaRepository;
+
     @Override
     public List<EventShortDto> searchEvents(String text, List<Long> categories, Boolean paid, LocalDateTime rangeStart,
                                             LocalDateTime rangeEnd, Boolean onlyAvailable, String sort, Integer from,
                                             Integer size, HttpServletRequest request) {
-        List<Event> events;
-        Pageable page;
-        if (sort.equals(EventSort.EVENT_DATE.name())) {
-            page = PageRequest.of(from, size, Sort.by("eventDate").descending());
-        } else {
-            page = PageRequest.of(from, size);
-        }
-        if (Objects.isNull(rangeStart) || Objects.isNull(rangeEnd)) {
-            rangeStart = LocalDateTime.now();
-            return repository.searchEventsIsFuture(text, categories, paid, rangeStart, page)
-                    .getContent()
-                    .stream()
-                    .map(mapper::mapToEventShortDto)
-                    .collect(Collectors.toList());
-        }
-        if (onlyAvailable) {
-            events = repository.searchEventsOnlyAvailable(text, categories, paid, rangeStart, rangeEnd, sort,
-                    page).getContent();
-        } else {
-            events = repository.searchEvents(text, categories, paid, rangeStart, rangeEnd, sort, page).getContent();
-        }
-        eventClient.addViews(request);
-        if (sort.equals(EventSort.VIEWS.name())) {
-            return events.stream()
-                    .map(mapper::mapToEventShortDto)
-                    .sorted(Comparator.comparingLong(EventShortDto::getViews).reversed())
-                    .collect(Collectors.toList());
-        }
-        return events.stream()
+        return criteriaRepository.searchEventsOnlyAvailable(
+                text, categories, paid, rangeStart, rangeEnd, from, size).stream()
                 .map(mapper::mapToEventShortDto)
                 .collect(Collectors.toList());
+
     }
 
 
