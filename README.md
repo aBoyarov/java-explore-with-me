@@ -2,7 +2,7 @@
 
 ### Бэкенд приложения для поиска событий поблизости.
 
-### Стек: Java, Spring Boot, Docker, Hibernate, Lombok, ModelMapper, WebClient, PostgreSQL
+### Стек: Java, Spring Boot, Docker, Hibernate, Lombok, ModelMapper, WebClient, PostgreSQL, CriteriaApi
 
 ### Микросервисы:
 1. Основной сервис - содержит основную бизнес логику приложения.  
