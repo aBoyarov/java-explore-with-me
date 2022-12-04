@@ -2,6 +2,8 @@
 
 ### Бэкенд приложения для поиска событий поблизости.
 
+### Стек: Java, Spring Boot, Docker, Hibernate, Lombok, ModelMapper, WebClient, PostgreSQL
+
 ### Микросервисы:
 1. Основной сервис - содержит основную бизнес логику приложения.  
 _[API](https://petstore.swagger.io/?url=https://raw.githubusercontent.com/aBoyarov/java-explore-with-me/develop/ewm-main-service-spec.json)_
